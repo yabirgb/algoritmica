@@ -141,7 +141,7 @@ int main(int argc, char * argv[])
 	  seleccion(U, n);
 	}
       clock_t t_despues = clock();
-      cout << n << " \t  " 
+      cout << n << "\t" 
 	   << ((double) ((t_despues - t_antes) - 
 			 (t_despues_vacio - t_antes_vacio))) / 
 	(CLOCKS_PER_SEC * NUM_VECES)

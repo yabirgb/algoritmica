@@ -226,7 +226,7 @@ int main(int argc, char * argv[])
       
       clock_t t_despues = clock();
   
-      cout << n << "  " << ((double)(t_despues - t_antes)) / CLOCKS_PER_SEC 
+      cout << n << "\t" << ((double)(t_despues - t_antes)) / CLOCKS_PER_SEC 
 	   << endl;
     } else {
       int * U = new int[n];
