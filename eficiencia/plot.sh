@@ -6,9 +6,34 @@ logaritmos=(mergesort quicksort heapsort)
 plots="plots"
 data="output"
 level=$1
+comparative=$2
 
+
+#Graficas compartidas
+
+if [ $2 == "-c" ];
+then
+  
+gnuplot <<- EOF
+        set xlabel "Tamaño del vector"
+        set ylabel "Tiempo (seg)"
+        set title "Comparativa -O${level}"   
+        set term png
+	set key left top
+        set output "${plots}/cuadraticas_O${level}.png"
+	set fit logfile '/dev/null'
+	burbuja(x) = a*x**2 + b*x + c
+	seleccion(x) = l*x**2 + m*x + n
+	inserccion(x) = k*x**2 + y*x + z
+        fit burbuja(x) "${data}/burbuja_O${level}.dat" via a,b,c
+	fit seleccion(x) "${data}/seleccion_O${level}.dat" via l,m,n
+	fit inserccion(x) "${data}/insercion_O${level}.dat" via k,y,z
+	plot "${data}/burbuja_O${level}.dat", "${data}/seleccion_O${level}.dat", "${data}/insercion_O${level}.dat" , burbuja(x), seleccion(x), inserccion(x)
+EOF
+
+else
+    
 #Plot data with dots
-
 for file in "${files[@]}"
 do
     
@@ -71,3 +96,4 @@ gnuplot <<- EOF
 	plot "${data}/${file}_O${level}.dat", f(x)
 EOF
 done
+fi
