@@ -81,12 +81,14 @@ static void insercion_lims(int T[], int inicial, int final)
 
 
 
-int main()
+int main(int args, char* argv[])
 {
   int n;
-  cout << "Introduce número de elementos del vector: ";
-  cin >> n;
-
+  //cout << "Introduce número de elementos del vector: ";
+  //cin >> n;
+  // string to long(string, endptr, base)
+  n = strtol(argv[1], NULL, 10);
+    
   int * T = new int[n];
   assert(T);
 
@@ -97,8 +99,13 @@ int main()
       T[i] = random();
     };
 
+  clock_t tantes = clock();
   insercion(T, n);
+  clock_t tdespues = clock();
 
+  cout << n << "\t" << (double)(tdespues - tantes) / CLOCKS_PER_SEC << endl;
+  
+  
   delete [] T;
 
   return 0;
