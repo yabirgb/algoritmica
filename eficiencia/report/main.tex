@@ -79,7 +79,7 @@ haciendo incrementos de 1000 en 1000 para tomar las medidas.
 $$D = \{x \in [1000, 25000]: x = 1000k, k \in \mathbb{N}\}$$
 
 Junto a este documento se encuentran las gráficas creadas y los datos
-que proporciona el programa gnu_plot sobre las mediciones.
+que proporciona el programa \textit{gnuplot} sobre las mediciones.
 
 \subsection{Condiciones de las mediciones}
 
@@ -97,9 +97,21 @@ minimizar el uso de \textit{CPU} para no interferir en las mediciones.
 
 \section{Análisis de los resultados}
 
+En esta sección me he concentrado en el análisis de los resultados
+obtenidos con la optimazión \textit{O0} que proporciona \textit{g++}
+debido al tiempo limitado del que disponemos. Los resultados se
+encuentran adjuntos para el resto de optimizaciones. Al final del
+documento se hará referencia a estos datos y se usaran para
+ejemplificar el efecto de la optimización.
+
+Por simplicidad del documento los datos se recogeran en las tablas que
+los comparan diferenciando claramante a que función pertenece cada
+dato. Al final del documento se acompañan las medidas para las
+optimizaciones de orden 1 y orden 2 para las que se han hecho medidas.
+
 \subsection{Algoritmo de ordenación Burbuja}
 
-Como se ha obtenido en el guión de prácticas la eficiencia de este algoritmo es
+Como se ha obtenido en el guión de prácticas la eficiencia de este algoritmo es:
 
 $$ \frac{a}{2}n^2 - \frac{3a}{2}n + a \in O(n^2)$$
 
@@ -123,8 +135,84 @@ Ajustando los datos por una función polinómica de orden 2, $ax^2+bx + c$, obte
     \caption{Ajuste para la ordenación burbuja}%
     \label{fig:example}%
   \end{figure}
+
+\subsection{Algoritmo de ordenación por insercción}
+
+Observando la nuve de puntos obtenida volvemos a ver como claramente
+se aproxima por una función polinómica de orden 2.
+
+\begin{figure}[H]%
+    \centering
+    \subfloat[Nube de puntos]{\includegraphics[width=9cm]{../plots/insercion_O0_points.png}}%
+    \qquad
+    \subfloat[Función continua]{\includegraphics[width=9cm]{../plots/insercion_O0_lines.png}}%
+    \caption{Resultados experimentales representados mediante una nube de puntos y una curva continua}%
+    \label{fig:example}%
+  \end{figure}
+
+Ajustando los datos por una función polinómica de orden 2, $ax^2+bx + c$, obtenemos la siguiente gráfica:
+
+\begin{figure}[H]%
+    \centering
+    \subfloat{\includegraphics[width=12cm]{../plots/insercion_O0_fit.png}}%
+    \caption{Ajuste para la ordenación por insercción}%
+    \label{fig:example}%
+\end{figure}
+
+Comparando con la ordenación burbuja podemos ver como el tiempo que
+invierte asintoticamente es mucho menor pese a ser ambas funciones de
+orden cuadrático. Para ello simplemente derivamos el polinomio de
+orden 2 con los coeficientes que nos ha proporcionado gnuplot tras
+hacer la aproximación. En estos casos siendo $f'(x)$ la derivada para
+la función de ajuste de laordenación burbuja y $g'(x)$ la derivada
+para la del algoritmo por insercción obtenemos:
+
+\begin{align}
+  f'(x) & = 2\cdot 3.11435e-09x + -5.06528e-06 \\
+  g'(x) & = 2\cdot1.06413e-09x + 1.06413e-09
+\end{align}
+
+\subsection{Algoritmo de ordenación por selección}
+
+Este es el último de los algoritmos de orden cuadrático que tenemos en nuestro estudio.
   
- 
+\begin{figure}[H]%
+    \centering
+    \subfloat[Nube de puntos]{\includegraphics[width=9cm]{../plots/seleccion_O0_points.png}}%
+    \qquad
+    \subfloat[Función continua]{\includegraphics[width=9cm]{../plots/seleccion_O0_lines.png}}%
+    \caption{Resultados experimentales representados mediante una nube de puntos y una curva continua}%
+    \label{fig:example}%
+\end{figure}
+
+
+La nube de puntos nos permite ver que de nuevo se trata de una función
+polinómica de orden 2. La gráfica de la función de ajuste es la
+siguiente:
+
+\begin{figure}[H]%
+    \centering
+    \subfloat{\includegraphics[width=12cm]{../plots/seleccion_O0_fit.png}}%
+    \caption{Ajuste para la ordenación por selección}%
+    \label{fig:example}%
+\end{figure}
+
+que aproxima visiblemente de manera muy buena a nuestros puntos.
+
+
+  
 \section{Comparación entre algoritmos}
+Los resultados empíricos tras haber realizado las mediciones se han recogido en la siguiente tabla:
+\input{tables/ordenacion.tex}
+
+Una gráfica que nos permite visualizar estos datos es la siguiente:
+
+\begin{figure}[H]%
+    \centering
+    \subfloat{\includegraphics[width=12cm]{../plots/cuadraticas_O0.png}}%
+    \caption{Comparación entre los distintos algoritmos de ordenación cuadráticos}%
+    \label{fig:example}%
+\end{figure}
+
 
 \end{document}
