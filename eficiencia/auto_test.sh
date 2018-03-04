@@ -5,7 +5,7 @@ out="output"
 safe=false
 
 #array=${ls -d $BIN}
-VERSION=0
+VERSION=$1
 total=25000
 files=(burbuja insercion seleccion mergesort quicksort heapsort)
 
