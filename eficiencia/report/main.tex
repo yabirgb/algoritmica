@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage[left=3cm,right=3cm,top=3cm,bottom=2cm]{geometry} % page settings
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2cm]{geometry} % page settings
 \usepackage{amsmath} % provides many mathematical environments & tools
 \usepackage{amssymb}
 \usepackage{amsfonts}
@@ -95,7 +95,7 @@ Para llevar a cabo las mediciones se ha utilizado un ordenador con las siguiente
 A la hora de realizar los tests se ha tenido la precaución de
 minimizar el uso de \textit{CPU} para no interferir en las mediciones.
 
-\section{Análisis de los resultados}
+\section{Resultados obtenidos}
 
 En esta sección me he concentrado en el análisis de los resultados
 obtenidos con la optimazión \textit{O0} que proporciona \textit{g++}
@@ -111,108 +111,65 @@ optimizaciones de orden 1 y orden 2 para las que se han hecho medidas.
 
 \subsection{Algoritmo de ordenación Burbuja}
 
-Como se ha obtenido en el guión de prácticas la eficiencia de este algoritmo es:
-
-$$ \frac{a}{2}n^2 - \frac{3a}{2}n + a \in O(n^2)$$
-
-Observando la nuve de puntos obtenida de los resultados podemos ver
-que se aproximan a una función cuadrática.
-
-\begin{figure}[H]%
-    \centering
-    \subfloat[Nube de puntos]{\includegraphics[width=9cm]{../plots/burbuja_O0_points.png}}%
-    \qquad
-    \subfloat[Función continua]{\includegraphics[width=9cm]{../plots/burbuja_O0_lines.png}}%
-    \caption{Resultados experimentales representados mediante una nube de puntos y una curva continua}%
-    \label{fig:example}%
-  \end{figure}
-
-Ajustando los datos por una función polinómica de orden 2, $ax^2+bx + c$, obtenemos la siguiente gráfica:
-
-\begin{figure}[H]%
-    \centering
-    \subfloat{\includegraphics[width=12cm]{../plots/burbuja_O0_fit.png}}%
-    \caption{Ajuste para la ordenación burbuja}%
-    \label{fig:example}%
-  \end{figure}
-
+\input{images/burbuja_0_images}
 \subsection{Algoritmo de ordenación por insercción}
 
-Observando la nuve de puntos obtenida volvemos a ver como claramente
-se aproxima por una función polinómica de orden 2.
 
-\begin{figure}[H]%
-    \centering
-    \subfloat[Nube de puntos]{\includegraphics[width=9cm]{../plots/insercion_O0_points.png}}%
-    \qquad
-    \subfloat[Función continua]{\includegraphics[width=9cm]{../plots/insercion_O0_lines.png}}%
-    \caption{Resultados experimentales representados mediante una nube de puntos y una curva continua}%
-    \label{fig:example}%
-  \end{figure}
-
-Ajustando los datos por una función polinómica de orden 2, $ax^2+bx + c$, obtenemos la siguiente gráfica:
-
-\begin{figure}[H]%
-    \centering
-    \subfloat{\includegraphics[width=12cm]{../plots/insercion_O0_fit.png}}%
-    \caption{Ajuste para la ordenación por insercción}%
-    \label{fig:example}%
-\end{figure}
-
-Comparando con la ordenación burbuja podemos ver como el tiempo que
-invierte asintoticamente es mucho menor pese a ser ambas funciones de
-orden cuadrático. Para ello simplemente derivamos el polinomio de
-orden 2 con los coeficientes que nos ha proporcionado gnuplot tras
-hacer la aproximación. En estos casos siendo $f'(x)$ la derivada para
-la función de ajuste de laordenación burbuja y $g'(x)$ la derivada
-para la del algoritmo por insercción obtenemos:
-
-\begin{align}
-  f'(x) & = 2\cdot 3.11435e-09x + -5.06528e-06 \\
-  g'(x) & = 2\cdot1.06413e-09x + 1.06413e-09
-\end{align}
+\input{images/insercion_0_images}
 
 \subsection{Algoritmo de ordenación por selección}
 
-Este es el último de los algoritmos de orden cuadrático que tenemos en nuestro estudio.
-  
-\begin{figure}[H]%
-    \centering
-    \subfloat[Nube de puntos]{\includegraphics[width=9cm]{../plots/seleccion_O0_points.png}}%
-    \qquad
-    \subfloat[Función continua]{\includegraphics[width=9cm]{../plots/seleccion_O0_lines.png}}%
-    \caption{Resultados experimentales representados mediante una nube de puntos y una curva continua}%
-    \label{fig:example}%
+\input{images/seleccion_0_images}
+
+\subsection{Comparativa de los algoritmos cuadráticos de ordenación}
+
+\subsection{Algoritmo de ordenación mergesort}
+\input{images/seleccion_0_images}
+\subsection{Algoritmo de ordenación quicksort}
+\input{images/quicksort_0_images}
+\subsection{Algoritmo de ordenación heapsort}
+\input{images/heapsort_0_images}
+\subsection{Algoritmo floyd}
+\input{images/floyd_0_images}
+\subsection{Algoritmo de las torres de Hanoi}
+\input{images/hanoi_0_images}
+
+\section{Analisis de los resultados}
+
+\subsection{Comparativa de los algoritmos $n^2$ de ordenación}
+
+\begin{figure}[H]
+  \centering   
+      \subfloat {%
+
+        \input{tables/ordenacionC0}
+        
+      }
+      
+      \subfloat{%
+        \includegraphics[clip,width=0.7\columnwidth]{../plots/cuadraticas_O0.png}%
+      }
+
+
+
+\caption{Comaparación entre los distintos algoritmos de ordenación cuadráticos}
 \end{figure}
 
 
-La nube de puntos nos permite ver que de nuevo se trata de una función
-polinómica de orden 2. La gráfica de la función de ajuste es la
-siguiente:
+\subsection{Comparativa de los algoritmos $nlogn$ de ordenación}
 
-\begin{figure}[H]%
-    \centering
-    \subfloat{\includegraphics[width=12cm]{../plots/seleccion_O0_fit.png}}%
-    \caption{Ajuste para la ordenación por selección}%
-    \label{fig:example}%
+\begin{figure}[H]
+  \centering   
+      \subfloat {%
+
+        \input{tables/ordenacionL0}
+        
+      }
+      
+      \subfloat{%
+        \includegraphics[clip,width=0.7\columnwidth]{../plots/logaritmicos_O0.png}%
+      }
+\caption{Comaparación entre los distintos algoritmos de ordenación $nlogn$}
 \end{figure}
-
-que aproxima visiblemente de manera muy buena a nuestros puntos.
-
-
-  
-\section{Comparación entre algoritmos}
-Los resultados empíricos tras haber realizado las mediciones se han recogido en la siguiente tabla:
-\input{tables/ordenacion.tex}
-
-Una gráfica que nos permite visualizar estos datos es la siguiente:
-
-\begin{figure}[H]%
-    \centering
-    \subfloat{\includegraphics[width=12cm]{../plots/cuadraticas_O0.png}}%
-    \caption{Comparación entre los distintos algoritmos de ordenación cuadráticos}%
-    \label{fig:example}%
-\end{figure}
-
 
 \end{document}
