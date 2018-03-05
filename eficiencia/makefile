@@ -7,9 +7,11 @@ SRC_FILES := $(wildcard $(SRC)/*.cpp)
 BIN_FILES := $(patsubst $(SRC)/%.cpp,$(BIN)/%,$(SRC_FILES))
 
 sort = $(BIN)/burbuja $(BIN)/insercion $(BIN)/seleccion $(BIN)/mergesort $(BIN)/quicksort $(BIN)/heapsort
+others = $(BIN)/hanoi $(BIN)/floyd
 
-all:$(BIN_FILES)
-sort: clean $(sort)
+all: clean $(sort) $(others)
+sort: $(sort)
+others: $(others)
 
 $(BIN)/%:
 	@echo "[Compiling]: $@"
