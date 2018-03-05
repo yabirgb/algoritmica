@@ -163,8 +163,8 @@ int main (int argc, char **argv)
   tantes = clock();
   Floyd(M,dim);
   tdespues = clock();
-  cout << "Tiempo: " << ((double)(tdespues-tantes))/CLOCKS_PER_SEC
-       << " s" << endl;
+  cout << dim << "\t" << ((double)(tdespues-tantes))/CLOCKS_PER_SEC
+       << endl;
   LiberaMatriz(M,dim);
 
   return 0;
