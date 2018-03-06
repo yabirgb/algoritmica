@@ -168,3 +168,25 @@ gnuplot <<- EOF
 	plot "${data}/${file}_O${level}.dat", f(x)
 EOF
 done
+
+#===============
+# Comparación de todos los algoritmos de ordenación
+#==============
+
+muchos=""
+for file in "${ordenacion[@]}"
+do
+
+    nuevo="'${data}/${file}_O${level}.dat' with lines, "
+    muchos=$muchos$nuevo
+done
+
+gnuplot <<- EOF
+        set xlabel "Tamaño del vector"
+        set ylabel "Tiempo (seg)"
+        set title "Comparativa de los algoritmos de ordenación -O${level}"   
+	set key left top
+        set term png
+        set output "${plots}/todos_ordenacion_O${level}.png"
+        plot ${muchos::-2}
+EOF
