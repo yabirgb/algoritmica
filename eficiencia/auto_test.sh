@@ -12,7 +12,7 @@ files=(burbuja insercion seleccion mergesort quicksort heapsort)
 for filen in "${files[@]}"
 do
     echo "Working on $filen"
-    i=0
+    i=1000
     echo "touch ${out}/${filen}_O${VERSION}.dat"
     while [ $i -le $total ]
     do
