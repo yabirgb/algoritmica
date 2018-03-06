@@ -37,10 +37,11 @@ def tablas(optimizacion):
     
     output_files = (("report/tables/ordenacionC{}.tex", "Tamaño Burbuja Insercción Selección",0 , 1000, "burbuja", "insercion", "seleccion"),
                     ("report/tables/ordenacionL{}.tex", "Tamaño Mergesort Quicksort Heapesort",0 , 1000, "mergesort", "quicksort", "heapsort"),
+                    ("report/tables/ordenacionTodos{}.tex", "Tamaño Burbuja Insercción Selección Mergesort Quicksort Heapesort",0 , 1000,  "burbuja", "insercion", "seleccion", "mergesort", "quicksort", "heapsort"),
                     ("report/tables/floyd{}.tex", "Tamaño Floyd",25 , 35, "floyd"),
                     ("report/tables/hanoi{}.tex", "Tamaño Hanoi",5 , 31, "hanoi"),)
     for pick in output_files:
-        header = """\\begin{tabular}[H]{|llll|}
+        header = """\\begin{{tabular}}[H]{{|{}|}}
 \\hline\n"""
     
         footer = """
@@ -49,6 +50,8 @@ def tablas(optimizacion):
         body = ""
             
         output, titles, start, increment, *sources = pick
+
+        header = header.format("l"*len(titles.split(" ")))
 
         #Create a line for each size
         lines = zip(*[data[x] for x in sources])
