@@ -163,8 +163,8 @@ gnuplot <<- EOF
         set term png
         set output "${plots}/${file}_O${level}_fit.png"
 	set fit logfile 'fit_data/${file}_O${level}_fit.log'
-	f(x) = a*2**(x+c) + b
-        fit f(x) "${data}/${file}_O${level}.dat" via a,b,c
+	f(x) = a*2**(x)
+        fit f(x) "${data}/${file}_O${level}.dat" via a
 	plot "${data}/${file}_O${level}.dat", f(x)
 EOF
 done
