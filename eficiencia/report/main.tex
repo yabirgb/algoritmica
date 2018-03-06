@@ -66,7 +66,9 @@ proceso. Para ellos se han hecho 2 scripts de bash y un archivo
 makefile para realizar las siguientes tareas:
 
 \begin{itemize}
-\item Crear archivos ejecutables para todos los algoritmos programados en \textit{C++} con distintas opciones de optimización a saber \textit{O1}, \textit{O2} y \textit{O3}.
+\item Crear archivos ejecutables para todos los algoritmos programados
+  en \textit{C++} con distintas opciones de optimización a saber
+  \textit{O1}, \textit{O2} y \textit{O3}.
 \item Ejecutar los distintos tests para los intervalos programados y
   almacenar los resultados en archivos de datos.
 \item Crear las respectivas gráficas para cada tabla de datos obtenida usando la herramienta gnuplot.
@@ -81,9 +83,28 @@ $$D = \{x \in [1000, 25000]: x = 1000k, k \in \mathbb{N}\}$$
 Junto a este documento se encuentran las gráficas creadas y los datos
 que proporciona el programa \textit{gnuplot} sobre las mediciones.
 
+A la hora de hacer un ajuste de mínimos cuadrados se han usado las
+siguientes funciones de ajuste:
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Complejidad (\textit{Big O}) & Función de ajuste \\ \hline
+    $O(n^2)$ & $f(x) = ax^2 + bx + c$ \\ \hline
+    $O(n^3)$ & $f(x) = ax^3 + bx^2 + cx + d$ \\ \hline
+    $O(nlog(n))$ & $f(x) = a\cdot log(x+b) + c$ \\ \hline
+    $O(2^n)$ & $f(x) = a2^x$ \\ \hline
+
+
+  \end{tabular}
+  \caption{Funciones de ajuste}
+\end{table}
+
 \subsection{Condiciones de las mediciones}
 
-Para llevar a cabo las mediciones se ha utilizado un ordenador con las siguientes características:
+Para llevar a cabo las mediciones se ha utilizado un ordenador con las
+siguientes características:
 
 \begin{itemize}
 \item CPU: Intel Pentium G3258 (2) @ 3.200GHz
@@ -97,17 +118,10 @@ minimizar el uso de \textit{CPU} para no interferir en las mediciones.
 
 \section{Resultados obtenidos}
 
-En esta sección me he concentrado en el análisis de los resultados
-obtenidos con la optimazión \textit{O0} que proporciona \textit{g++}
-debido al tiempo limitado del que disponemos. Los resultados se
-encuentran adjuntos para el resto de optimizaciones. Al final del
-documento se hará referencia a estos datos y se usaran para
-ejemplificar el efecto de la optimización.
-
-Por simplicidad del documento los datos se recogeran en las tablas que
-los comparan diferenciando claramante a que función pertenece cada
-dato. Al final del documento se acompañan las medidas para las
-optimizaciones de orden 1 y orden 2 para las que se han hecho medidas.
+En esta sección de la practica me concentro en mostrar los resultados
+obtenidos tras haber completado el proceso de pruebas de los distintos
+algoritmos. En este caso muestro los datos con una eficiencia al
+compilar \textit{O0}.
 
 \subsection{Algoritmo de ordenación Burbuja}
 
@@ -136,7 +150,7 @@ optimizaciones de orden 1 y orden 2 para las que se han hecho medidas.
 
 \section{Analisis de los resultados}
 
-\subsection{Comparativa de los algoritmos $n^2$ de ordenación}
+\subsection{Comparativa de los algoritmos $O(n^2)$ de ordenación}
 
 \begin{figure}[H]
   \centering   
@@ -156,7 +170,7 @@ optimizaciones de orden 1 y orden 2 para las que se han hecho medidas.
 \end{figure}
 
 
-\subsection{Comparativa de los algoritmos $nlogn$ de ordenación}
+\subsection{Comparativa de los algoritmos $nlog(n)$ de ordenación}
 
 \begin{figure}[H]
   \centering   
@@ -169,7 +183,37 @@ optimizaciones de orden 1 y orden 2 para las que se han hecho medidas.
       \subfloat{%
         \includegraphics[clip,width=0.7\columnwidth]{../plots/logaritmicos_O0.png}%
       }
-\caption{Comaparación entre los distintos algoritmos de ordenación $nlogn$}
+      \caption{Comaparación entre los distintos algoritmos de ordenación $nlogn$}
 \end{figure}
+
+\subsection{Comparativa de los algoritmos de ordenación}
+
+\begin{figure}[H]
+  \centering   
+      \subfloat {%
+        \input{tables/ordenacionTodos0}
+      }
+      
+      \subfloat{%
+        \includegraphics[clip,width=0.7\columnwidth]{../plots/todos_ordenacion_O0.png}%
+      }
+      \caption{Comaparación entre los distintos algoritmos de ordenación $nlogn$}
+\end{figure}
+
+De los resultados obtenidos podemos ver de forma clara como el
+algoritmo de burbuja es el que desempeña la tarea de forma
+considerablemente más lenta.
+
+Entre los algoritmos de selección e insercción no encontramos mucha
+diferencia aunque son notoriamente más eficientes que el de burbuja.
+
+Finalmente los algoritmos de orden $O(n\cdot log(n))$ son mucho más
+eficientes que el resto aunque podemos observar como el algoritmo
+quicksort ha sido el que ha obtenido mejores resultados pese a ser del
+mismo orden de eficiencia.
+
+En el algoritmo de hanoi podemos observar como al ser $O(2^n)$ el
+tiempo que tarda en ejecutarse crece rapidamente a partir de un punto
+lo cual nos permite realizar únicamente pocas iteraciones.
 
 \end{document}
