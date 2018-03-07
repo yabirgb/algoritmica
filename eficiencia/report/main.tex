@@ -39,6 +39,15 @@
 \usepackage{graphicx}
 \usepackage{subfig}
 
+\usepackage{listings}
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+
 \begin{document}
 
 \title{%
@@ -56,6 +65,137 @@
 \newpage
 
 \section{Análisis de los algoritmos}
+
+Queda por realizar un análisis teórico de los algoritmos de ordenación
+pero por falta de tiempo lo entregaré en la siguiente fecha de
+entrega.
+
+\subsection{Algoritmo burbuja}
+
+Este algoritmo funciona como `las burbujas en un refresco`. Lo que
+hace es comparar de izquierda a derecha del vector cada elemento con
+los adyacentes de modo que los más grandes se desplazan a la derecha.
+
+Como se explica en el guión la eficiencia de este algoritmo es:
+
+$$ \frac{a}{2}n^2 - \frac{3a}{2}n + a $$
+
+\subsection{Algoritmo de ordenación por insercción}
+
+Busca en un vector de elementos el menor y lo coloca a la izquierda,
+después repetimos esta operación para los $n-1$ elementos restantes.
+
+\subsection{Algoritmo de ordenación por selección}
+
+Partimos de una lista de elementos ordenados con un solo elemento y de
+otra de elementos desordenados con $n-1$ elementos. En cada paso
+elegimos un elemento de la lista de elementos desordenados y lo
+insertamos de manera ordenada en la lista de elementos ordenados.
+
+\begin{lstlisting}
+static void seleccion_lims(int T[], int inicial, int final)
+{
+  int i, j, indice_menor;
+  int menor, aux;
+  for (i = inicial; i < final - 1; i++) {
+    indice_menor = i;
+    menor = T[i];
+    for (j = i; j < final; j++)
+      if (T[j] < menor) {
+	indice_menor = j;
+	menor = T[j];
+      }
+    aux = T[i];
+    T[i] = T[indice_menor];
+    T[indice_menor] = aux;
+  };
+}
+
+\end{lstlisting}
+
+% Su eficiencia teorica es la siguiente:
+
+% \begin{align}
+%   \sum_{i=1}^{n-2}\left[c_1+\sum_{j=1}^{n-1}c_2\right] & = \sum_{i=1}^{n-2}\left[c_1+c_2\sum_{j=1}^{n-1}1\right] \\
+%                                                        & = \sum_{i=1}^{n-2}\left[c_1+c_2\frac{(n-1)n}{2}\right] \\
+%                                                        & = c_2\frac{(n-1)n}{2} + c_1 \sum_{i=1}^{n-2}1 \\
+%                                                        & = c_2\frac{(n-1)n}{2} + c_1 \frac{(n^2-3n+2)}{2} \\
+%                                                        & = n^2(c_2+c_1) - n(\frac{c_2}{2} + \frac{3c_1}{2}) + c_1
+% \end{align}
+
+\subsection{Algoritmo de ordenación mergesort}
+
+Creamos listas de un solo elementos y las vamos combinando en
+distintos pasos de manera ordenada. Estamos haciendo algoritmo que
+consiste en dividir la complejidad en tareas más pequeñas y después
+juntar el resultado ya más sencillo.
+
+La complejidad de este algoritmo es $O(n\cdot log(n)$ más concretamente:
+
+$$T(n) = c_1n + c_2n\cdot log(n)$$
+
+
+\subsection{Algoritmo de ordenación quicksort}
+
+En este algoritmo tomamos un punto que hará de pivote. Movemos los
+elementos de manera que a la derecha del pivote queden los que son
+mayores que él y la izquierda los que son menores. Una vez hecho esto
+repetimos el proceso tomando pivotes en los conjuntos de los elementos
+mayores y menores.
+
+\subsection{Algoritmo de ordenación heapsort}
+
+Disponemos todos los elementos en un \textit{heap}. Buscamos el mayor
+de los elementos y lo quitamos insertandolo al final. Funciona de
+manera parecida a la ordenación burbuja.
+
+\subsection{Algoritmo floyd}
+
+Este algoritmo realiza todas las sumas posibles y devuelve la mayor de
+ellas.
+
+\begin{lstlisting}
+void Floyd(int **M, int dim)
+{
+	for (int k = 0; k < dim; k++)
+	  for (int i = 0; i < dim;i++)
+	    for (int j = 0; j < dim;j++)
+	      {
+		int sum = M[i][k] + M[k][j];    	
+	    	M[i][j] = (M[i][j] > sum) ? sum : M[i][j];
+	      }
+}
+\end{lstlisting}
+
+Este algoritmo es de complejidad $O(n^3)$, más concretamente:
+
+$$\sum_{k=0}^{n}{\sum_{i=0}^{n}{\sum_{j=0}^n{a}}} = an^3$$
+
+\subsection{Algoritmo de las torres de Hanoi}
+
+\begin{lstlisting}
+void hanoi (int M, int i, int j)
+{
+  if (M > 0)
+    {
+      hanoi(M-1, i, 6-i-j);
+      //cout << i << " -> " << j << endl;
+      hanoi (M-1, 6-i-j, j);
+  }
+}
+\end{lstlisting}
+
+En este algoritmo aplicamos la siguiente recurrencia:
+
+$$h(n) = 2h(n-1)$$
+
+que se corresponde con la ecuación en recurrencias homogenea:
+
+$$x_n = 2x_{n-1}$$
+
+Cuya solución es a partir de un termino incial $x_0$:
+
+$$x_n = 2^nx_0$$
 
 \section{Cálculo de la eficiencia empírica}
 
@@ -109,7 +249,7 @@ siguientes características:
 \begin{itemize}
 \item CPU: Intel Pentium G3258 (2) @ 3.200GHz
 \item Memoria RAM: 7876MiB
-\item Kernel:4.13.0-36-generic
+\item Kernel: 4.13.0-36-generic
 \item OS: Linux Mint 18.3 Sylvia x86\_64
 \end{itemize}
 
@@ -123,10 +263,10 @@ obtenidos tras haber completado el proceso de pruebas de los distintos
 algoritmos. En este caso muestro los datos con una eficiencia al
 compilar \textit{O0}.
 
-\subsection{Algoritmo de ordenación Burbuja}
+\subsection{Algoritmo de ordenación burbuja}
 
 \input{images/burbuja_0_images}
-\subsection{Algoritmo de ordenación por insercción}
+\subsection{Algoritmo de ordenación por inserción}
 
 
 \input{images/insercion_0_images}
@@ -200,12 +340,15 @@ compilar \textit{O0}.
       \caption{Comaparación entre los distintos algoritmos de ordenación $nlogn$}
 \end{figure}
 
+\newpage
+
 De los resultados obtenidos podemos ver de forma clara como el
 algoritmo de burbuja es el que desempeña la tarea de forma
 considerablemente más lenta.
 
 Entre los algoritmos de selección e insercción no encontramos mucha
-diferencia aunque son notoriamente más eficientes que el de burbuja.
+diferencia aunque son notoriamente más eficientes que los de orden
+cuadrático como se observa en la comparativa.
 
 Finalmente los algoritmos de orden $O(n\cdot log(n))$ son mucho más
 eficientes que el resto aunque podemos observar como el algoritmo
@@ -215,5 +358,77 @@ mismo orden de eficiencia.
 En el algoritmo de hanoi podemos observar como al ser $O(2^n)$ el
 tiempo que tarda en ejecutarse crece rapidamente a partir de un punto
 lo cual nos permite realizar únicamente pocas iteraciones.
+
+La suma de los cuadrados de los residuos de los ajustes realizados ha
+sido la siguiente:
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|ll|}
+
+    \hline
+    Algoritmo & Suma residual \\ \hline
+    Burbuja & 9.84713e-05 \\ \hline
+    Inserción & 7.19712e-05\\ \hline
+    Selección & 8.779e-06\\ \hline
+    Mergesort & 1.54282e-05\\ \hline
+    Heapsort & 7.24527e-06\\ \hline
+    Quicksort & 2.17388e-06\\ \hline
+    Floyd & 0.000654703\\ \hline
+    Hanoi & 1.17475e-05\\ \hline
+    
+  \end{tabular}
+  \caption{Ajuste los resultados}
+\end{table}
+
+Lo cual nos indica que los resultados que hemos obtenido realemte se ajustan bien a lo esperado según la notación \textit{Big  O}
+
+Tambíen he realizado medidas con otros ordenes de eficiciencia. En
+este caso expongo los resultados con la eficiencia $-O2$. Como se
+puede apreciar en las gráficas, los resultados son mucho mejores y
+destacan el caso de la ordenación por burbuja donde se consigue que,
+aun siendo cuadrática, el tiempo de ejecución se reduzca más de la
+mitad y el caso del algoritmo de Hanoi, donde pasamos de casi 14
+segundos en los últimos valores a tan solo 5.
+
+\begin{figure}[H]
+  \centering
+  \subfloat{\includegraphics[width=0.6\textwidth]{../plots/burbuja_comparativa.png}}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \subfloat{\includegraphics[width=0.6\textwidth]{../plots/seleccion_comparativa.png}}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \subfloat{\includegraphics[width=0.6\textwidth]{../plots/insercion_comparativa.png}}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \subfloat{\includegraphics[width=0.6\textwidth]{../plots/mergesort_comparativa.png}}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \subfloat{\includegraphics[width=0.6\textwidth]{../plots/quicksort_comparativa.png}}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \subfloat{\includegraphics[width=0.6\textwidth]{../plots/heapsort_comparativa.png}}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \subfloat{\includegraphics[width=0.6\textwidth]{../plots/floyd_comparativa.png}}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \subfloat{\includegraphics[width=0.6\textwidth]{../plots/hanoi_comparativa.png}}
+\end{figure}
 
 \end{document}

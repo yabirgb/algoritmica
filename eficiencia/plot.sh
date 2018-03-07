@@ -130,8 +130,8 @@ gnuplot <<- EOF
         set term png
         set output "${plots}/${file}_O${1}_fit.png"
 	set fit logfile 'fit_data/${file}_O${1}_fit.log'
-	f(x) = a*log(x+b) + c
-        fit f(x) "${data}/${file}_O${level}.dat" via a,b,c
+	f(x) = a*x*log(d*x+b) + c
+        fit f(x) "${data}/${file}_O${level}.dat" via a,b,c,d
 	plot "${data}/${file}_O${level}.dat", f(x)
 EOF
 done
@@ -198,7 +198,7 @@ do
 gnuplot <<- EOF
         set xlabel "Tamaño del vector"
         set ylabel "Tiempo (seg)"
-        set title "Eficiencia ${file} -O${level}"   
+        set title "Comparativa ${file} -O${level} / -O2"   
         set term png
         set output "${plots}/${file}_comparativa.png"
         plot "${data}/${file}_O2.dat" with lines, "${data}/${file}_O0.dat" with lines 
