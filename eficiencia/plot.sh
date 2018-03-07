@@ -190,3 +190,17 @@ gnuplot <<- EOF
         set output "${plots}/todos_ordenacion_O${level}.png"
         plot ${muchos::-2}
 EOF
+
+#Plot data with dots
+for file in "${files[@]}"
+do
+    
+gnuplot <<- EOF
+        set xlabel "Tamaño del vector"
+        set ylabel "Tiempo (seg)"
+        set title "Eficiencia ${file} -O${level}"   
+        set term png
+        set output "${plots}/${file}_comparativa.png"
+        plot "${data}/${file}_O2.dat" with lines, "${data}/${file}_O0.dat" with lines 
+EOF
+done
