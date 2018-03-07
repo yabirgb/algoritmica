@@ -1,6 +1,6 @@
 #!/bin/bash
 i=1000
-BIN="bin/"
+BIN="bin"
 out="output"
 safe=false
 
@@ -8,6 +8,7 @@ safe=false
 VERSION=$1
 total=25000
 files=(burbuja insercion seleccion mergesort quicksort heapsort)
+fileslog=(mergesort quicksort heapsort)
 
 for filen in "${files[@]}"
 do
