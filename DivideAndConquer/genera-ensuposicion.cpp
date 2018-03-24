@@ -61,9 +61,11 @@ int main(int argc, char * argv[]){
   //me quedo con los n primeros del vector
   for (int j=0; j<n; j++)
     T[j]=aux[j];
-
+  
   for (int j=0; j<n; j++)
     cout << T[j] << " ";
+
+  cout << endl;
   
   //Y ahora ordeno el vector T
   vector<int> myvector (T, T+n);
@@ -72,11 +74,11 @@ int main(int argc, char * argv[]){
   sort(myvector.begin(),myvector.end());
 
   for (it=myvector.begin(); it!=myvector.end(); ++it)
-    cout << " " << *it;
+    cout <<  *it << " ";
 
   cout << endl;
 
 
   delete [] aux;
-
+  delete [] T;
 }
