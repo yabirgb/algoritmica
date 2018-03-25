@@ -97,49 +97,24 @@ int main(int argc, char * argv[]){
   for (int j=0; j<n; j++)
     T[j]=aux[j];
 
-  /*
   cout << "Vector aleatorio: " << endl;
   for (int j=0; j<n; j++)
     cout << T[j] << " ";
 
   cout << endl;
 
-  int Q[10] = {2,3,5,22,5,6,1,2,8,1};
+  int P[10] = {-1,0,1,2,3,5,8,9,12,13};
 
-  
+  vector<int> Q (P, P+n);
+  sort(Q.begin(),Q.end());
   cout << "Vector no aleatorio: " << endl;
   for (int j=0; j<n; j++)
     cout << Q[j] << " ";
 
   cout << endl;
   
-  cout << "Resultado del punto fijo: " << inpos(T,0,n) << endl;
-  cout << "Resultado del punto fijo: " << inposOdd(T,n) << endl;
-  
-  */
-
-  //100 millones
-
-  //Y ahora ordeno el vector T
-  vector<int> myvector (T, T+n);
-  vector<int>::iterator it;
-
-  sort(myvector.begin(),myvector.end());
-
-  before = clock();
-  //cout << "DaC: " << inpos(T, 0, n) << endl;
-  inpos(myvector);
-  after = clock();
-  double bueno =  ((double)(after-before))/CLOCKS_PER_SEC;
-
-    
-  before = clock();
-  //cout << "Lineal: " << inposOdd(T,n) << endl;
-  inposOdd(myvector);
-  after = clock();
-  
-  cout << n << "\t" << bueno << "\t" << ((double)(after-before))/CLOCKS_PER_SEC
-       << endl;
+  cout << "Resultado del punto fijo: " << inpos(Q) << endl;
+  cout << "Resultado del punto fijo: " << inposOdd(Q) << endl;
   
   delete [] aux;
   delete [] T;
