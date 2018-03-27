@@ -29,42 +29,7 @@ double uniforme(){
   
 }
 
-int inpos(vector<int> &v){
-  
-  int min = 0;
-  int max = v.size();
-  int mid;
-  int result = -1;
-  bool catched = false;
-  
-  while (!catched && min < max -1){
-    mid = (max+min)/2;
-    if (v[mid] == mid)
-      return mid;
-    else if(v[mid] < mid)
-      max = mid;
-    else if(v[mid] > mid)
-      min = mid; 
-  }
-
-  return result;
-   
-}
-
-int inposOdd(vector<int> v){
-
-  int i;
-
-  for(i = 0; i < v.size(); i++)
-    if(v[i] == i)
-      return i;
-
-  return -1;
-}
-
 int main(int argc, char * argv[]){
-
-  clock_t before, after;
 
   if (argc != 2){
     cerr << "Formato " << argv[0] << " <num_elem>" << endl;
@@ -96,27 +61,24 @@ int main(int argc, char * argv[]){
   //me quedo con los n primeros del vector
   for (int j=0; j<n; j++)
     T[j]=aux[j];
-
-  cout << "Vector aleatorio: " << endl;
+  
   for (int j=0; j<n; j++)
     cout << T[j] << " ";
 
   cout << endl;
+  
+  //Y ahora ordeno el vector T
+  vector<int> myvector (T, T+n);
+  vector<int>::iterator it;
 
-  int P[10] = {-1,0,1,2,3,5,8,9,12,13};
+  sort(myvector.begin(),myvector.end());
 
-  vector<int> Q (P, P+n);
-  sort(Q.begin(),Q.end());
-  cout << "Vector no aleatorio: " << endl;
-  for (int j=0; j<n; j++)
-    cout << Q[j] << " ";
+  for (it=myvector.begin(); it!=myvector.end(); ++it)
+    cout <<  *it << " ";
 
   cout << endl;
-  
-  cout << "Resultado del punto fijo: " << inpos(Q) << endl;
-  cout << "Resultado del punto fijo: " << inposOdd(Q) << endl;
-  
+
+
   delete [] aux;
   delete [] T;
-  
 }

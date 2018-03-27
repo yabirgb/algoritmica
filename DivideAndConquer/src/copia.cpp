@@ -39,11 +39,11 @@ int inpos(vector<int> v){
   
   while (!catched && min < max -1){
     mid = (max+min)/2;
-    if (v[min+mid] == min+mid)
+    if (v[mid] == mid)
       return mid;
-    else if(v[min + mid] < min + mid)
+    else if(v[mid] < mid)
       max = mid;
-    else if(v[min + mid] > min+mid)
+    else if(v[mid] > mid)
       min = mid; 
   }
 
