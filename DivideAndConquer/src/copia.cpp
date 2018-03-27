@@ -29,26 +29,49 @@ double uniforme(){
   
 }
 
-int inpos(vector<int> v){
+int inpos(vector<int> &v){
   
   int min = 0;
   int max = v.size();
   int mid;
-  int result = -1;
-  bool catched = false;
-  
-  while (!catched && min < max -1){
+
+  while (min <= max){
     mid = (max+min)/2;
+    
     if (v[mid] == mid)
       return mid;
     else if(v[mid] < mid)
-      max = mid;
+      min = mid + 1;
     else if(v[mid] > mid)
-      min = mid; 
+      max = mid-1; 
   }
 
-  return result;
+  return -1;
    
+}
+
+int conRepetidos(vector<int> &v, int top, int bot){
+
+  if (bot > top)
+    return -1;
+
+  int mid = (top+bot)/2;
+  int midv = v[mid];
+
+  if (midv == mid)
+    return mid;
+
+  int lefti = min(mid-1, midv);
+  int left  = conRepetidos(v, lefti, bot);
+
+  if (left != -1)
+    return left;
+
+  int righti = max(mid+1, midv);
+  int right = conRepetidos(v, bot, top);
+
+  return right;
+      
 }
 
 int inposOdd(vector<int> v){
@@ -135,7 +158,7 @@ int main(int argc, char * argv[]){
     
   before = clock();
   //cout << "Lineal: " << inposOdd(T,n) << endl;
-  inposOdd(myvector);
+  conRepetidos(myvector, myvector.size(), 0 );
   after = clock();
   
   cout << n << "\t" << bueno << "\t" << ((double)(after-before))/CLOCKS_PER_SEC
