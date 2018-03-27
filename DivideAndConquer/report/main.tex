@@ -89,25 +89,22 @@ nuestro algoritmo se puede basar en este.
 
 \begin{lstlisting}
 int inpos(vector<int> &v){
-  
   int min = 0;
   int max = v.size();
   int mid;
-  int result = -1;
-  bool catched = false;
-  
-  while (!catched && min < max -1){
+
+  while (min <= max){
     mid = (max+min)/2;
+    
     if (v[mid] == mid)
       return mid;
     else if(v[mid] < mid)
-      max = mid;
+      min = mid + 1;
     else if(v[mid] > mid)
-      min = mid; 
+      max = mid-1; 
   }
 
-  return result;
-   
+  return -1;
 }
 \end{lstlisting}
 
@@ -199,7 +196,7 @@ regresión mediante una función del tipo $f(x) = b*log(x+c)+a$ y tras
         \includegraphics[clip,width=1\columnwidth]{../plots/hibrida2.png}%
       }
 
-\caption{Comaparación de los dos algoritmos}
+\caption{Eficiencia híbrida ($log(n)$}
 \end{figure}
 
 \begin{verbatim}
@@ -219,7 +216,7 @@ Donde vemos que el ajuste es muy buen aunque si hacemos un ajuste lineal observa
         \includegraphics[clip,width=1\columnwidth]{../plots/hibrida_lineal.png}%
       }
 
-\caption{Comaparación de los dos algoritmos}
+\caption{Eficiencia híbrid $mx+n$}
 \end{figure}
 
 \begin{verbatim}
@@ -233,5 +230,61 @@ b               = 1.83948e-09      +/- 5.171e-12    (0.2811%)
 
 Que nos indica que aun siendo bueno el ajuste logarítmico tiende a
 comportarse como una recta para valores pequeños.
+
+\section{Mejora de nuestro algoritmo}
+
+El algoritmo implementado anteriormente no funciona cuando en el
+vector encontramos elementos repetidos ya que esto hace que la
+dependencia entre el orden y la posición al comparar no sea tal. Para
+resolverlo se propone la siguiente implementación de un algoritmo
+Divide y Vencerás:
+
+\begin{lstlisting}
+int conRepetidos(vector<int> &v, int top, int bot){
+
+  if (bot > top)
+    return -1;
+
+  int mid = (top+bot)/2;
+  int midv = v[mid];
+
+  if (midv == mid)
+    return mid;
+
+  int lefti = min(mid-1, midv);
+  int left  = conRepetidos(v, lefti, bot);
+
+  if (left != -1)
+    return left;
+
+  int righti = max(mid+1, midv);
+  int right = conRepetidos(v, bot, top);
+
+  return right;
+      
+}
+\end{lstlisting}
+
+En esta implementación estamos aplicando un desarrollo semajante al
+anterior pero en esta ocasión tenemos en cuenta un entorno del punto
+que analizamos.
+
+Como demuestra el siguiente gráfico
+
+\begin{figure}[H]
+  \centering   
+      \subfloat{%
+        \includegraphics[clip,width=1\columnwidth]{../plots/segundoDyV.png}%
+      }
+
+\caption{Comparación de ambos algoritmos DyV}
+\end{figure}
+la eficiencia del nuevo algoritmos es mayor además de ser más general
+que el anterior.
+
+Un análisis teórico del algoritmo anterior nos permite ver que la
+eficiencia es también logarítmica y al ver la comparativa de tiempos
+entre ambos podemos afirmar esto ya que la linea de tiempos se
+mantiene paralela a la del primer algoritmo.
 
 \end{document}
