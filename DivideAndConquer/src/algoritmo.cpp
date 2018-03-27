@@ -34,21 +34,24 @@ int inpos(vector<int> &v){
   int min = 0;
   int max = v.size();
   int mid;
-  int result = -1;
-  bool catched = false;
-  
-  while (!catched && min < max -1){
+
+  while (min <= max){
     mid = (max+min)/2;
+    
     if (v[mid] == mid)
       return mid;
     else if(v[mid] < mid)
-      max = mid;
+      min = mid + 1;
     else if(v[mid] > mid)
-      min = mid; 
+      max = mid-1; 
   }
 
-  return result;
+  return -1;
    
+}
+
+int tocho(vector<int> v){
+
 }
 
 int inposOdd(vector<int> v){
@@ -65,58 +68,87 @@ int inposOdd(vector<int> v){
 int main(int argc, char * argv[]){
 
   clock_t before, after;
+  int n = 5;
 
-  if (argc != 2){
-    cerr << "Formato " << argv[0] << " <num_elem>" << endl;
-    return -1;
-  }
-
-  int n = atoi(argv[1]);
-  int m=2*n-1;
-
-  int * T = new int[n];
-  assert(T);
-  int * aux = new int[m];
-  assert(aux);
-
-  srand(time(0));
-  //genero todos los enteros entre -(n-1) y n-1
-  for (int j=0; j<m; j++)
-    aux[j]=j-(n-1);
-
-  //algoritmo de random shuffling the Knuth (permutación aleatoria) 
-  for (int j=m-1; j>0; j--) {
-    double u=uniforme();
-    int k=(int)(j*u);
-    int tmp=aux[j];
-    aux[j]=aux[k];
-    aux[k]=tmp;
-  }
-
-  //me quedo con los n primeros del vector
-  for (int j=0; j<n; j++)
-    T[j]=aux[j];
-
-  cout << "Vector aleatorio: " << endl;
-  for (int j=0; j<n; j++)
-    cout << T[j] << " ";
-
-  cout << endl;
-
-  int P[10] = {-1,0,1,2,3,5,8,9,12,13};
-
-  vector<int> Q (P, P+n);
+  vector<int> Q ({2,0,3,5,7});
   sort(Q.begin(),Q.end());
   cout << "Vector no aleatorio: " << endl;
-  for (int j=0; j<n; j++)
+  for (int j=0; j<Q.size(); j++)
     cout << Q[j] << " ";
 
   cout << endl;
   
   cout << "Resultado del punto fijo: " << inpos(Q) << endl;
   cout << "Resultado del punto fijo: " << inposOdd(Q) << endl;
+
+  vector<int> P ({6,8,3,5,7});
+  sort(P.begin(),P.end());
+  cout << "Vector no aleatorio: " << endl;
+  for (int j=0; j<P.size(); j++)
+    cout << P[j] << " ";
+
+  cout << endl;
   
-  delete [] aux;
-  delete [] T;
+  cout << "Resultado del punto fijo: " << inpos(P) << endl;
+  cout << "Resultado del punto fijo: " << inposOdd(P) << endl;
+
+
+  vector<int> R ({0,1,3,5,7});
+  sort(R.begin(),R.end());
+  cout << "Vector no aleatorio: " << endl;
+  for (int j=0; j<R.size(); j++)
+    cout << R[j] << " ";
+
+  cout << endl;
+  
+  cout << "Resultado del punto fijo: " << inpos(R) << endl;
+  cout << "Resultado del punto fijo: " << inposOdd(R) << endl;
+
+
+  vector<int> S ({0,0,1,3,5,7});
+  sort(S.begin(),S.end());
+  cout << "Vector no aleatorio: " << endl;
+  for (int j=0; j<S.size(); j++)
+    cout << S[j] << " ";
+
+  cout << endl;
+  
+  cout << "Resultado del punto fijo: " << inpos(S) << endl;
+  cout << "Resultado del punto fijo: " << inposOdd(S) << endl;
+
+  vector<int> Ss ({-1,-2,3,3,5,5,7});
+  sort(Ss.begin(),Ss.end());
+  cout << "Vector no aleatorio: " << endl;
+  for (int j=0; j<Ss.size(); j++)
+    cout << Ss[j] << " ";
+
+  cout << endl;
+  
+  cout << "Resultado del punto fijo: " << inpos(Ss) << endl;
+  cout << "Resultado del punto fijo: " << inposOdd(Ss) << endl;
+
+  vector<int> M ({0,0,1,4,5});
+  sort(M.begin(),M.end());
+  cout << "Vector no aleatorio: " << endl;
+  for (int j=0; j<M.size(); j++)
+    cout << M[j] << " ";
+
+  cout << endl;
+  
+  cout << "Resultado del punto fijo: " << inpos(M) << endl;
+  cout << "Resultado del punto fijo: " << inposOdd(M) << endl;
+
+
+  vector<int> B ({0,6,1,4,5});
+  sort(B.begin(),B.end());
+  cout << "Vector no aleatorio: " << endl;
+  for (int j=0; j<B.size(); j++)
+    cout << B[j] << " ";
+
+  cout << endl;
+  
+  cout << "Resultado del punto fijo: " << inpos(B) << endl;
+  cout << "Resultado del punto fijo: " << inposOdd(B) << endl;
+
   
 }
