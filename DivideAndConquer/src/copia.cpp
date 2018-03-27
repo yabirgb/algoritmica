@@ -35,9 +35,8 @@ int inpos(vector<int> v){
   int max = v.size();
   int mid;
   int result = -1;
-  bool catched = false;
-  
-  while (!catched && min < max -1){
+
+  while (min < max -1){
     mid = (max+min)/2;
     if (v[mid] == mid)
       return mid;
