@@ -52,7 +52,26 @@ int inpos(vector<int> &v){
 
 int conRepetidos(vector<int> &v, int top, int bot){
 
-  
+  if (bot > top)
+    return -1;
+
+  int mid = (top+bot)/2;
+  int midv = v[mid];
+
+  if (midv == mid)
+    return mid;
+
+  int lefti = min(mid-1, midv);
+  int left  = conRepetidos(v, lefti, bot);
+
+  if (left != -1)
+    return left;
+
+  int righti = max(mid+1, midv);
+  int right = conRepetidos(v, bot, top);
+
+  return right;
+      
 }
 
 int inposOdd(vector<int> v){
