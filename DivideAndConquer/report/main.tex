@@ -216,7 +216,7 @@ Donde vemos que el ajuste es muy buen aunque si hacemos un ajuste lineal observa
         \includegraphics[clip,width=1\columnwidth]{../plots/hibrida_lineal.png}%
       }
 
-\caption{Eficiencia híbrid $mx+n$}
+\caption{Eficiencia híbrida $mx+n$}
 \end{figure}
 
 \begin{verbatim}
@@ -265,9 +265,41 @@ int conRepetidos(vector<int> &v, int top, int bot){
 }
 \end{lstlisting}
 
-En esta implementación estamos aplicando un desarrollo semajante al
-anterior pero en esta ocasión tenemos en cuenta un entorno del punto
-que analizamos.
+Para razonar este algoritmo me he basado en una primera aproximación
+que hice del problema con el siguiente bloque de código:
+
+\begin{lstlisting}
+  int inpos(int T[], int init, int len){
+  int mid = len/2;
+  
+  if(len != 0){
+    if (T[init + mid] == init+mid )
+      return init+mid;
+    else{
+      int below = inpos(T, init, mid);
+      int up = inpos(T, init + mid+1, len - mid-1);
+
+      if(below != -1)
+	return below;
+      if (up != -1)
+	return up;	  
+    }
+  }
+
+  return -1;
+}
+\end{lstlisting}
+
+La idea que tenía en mente era tratar un desplazamiento a la hora de
+desarrollar la división en partes del vector. Cometí una serie de
+errores como cuales eran los argumentos que pasaba a la función y
+cuales eran los valores que estudiaba pero como se puede aprecia esta
+aproximación me sirvió posteriormente para desarrollar el algoritmo
+que me serviría en casos más generales.
+
+En la versión final estamos aplicando un desarrollo semajante al
+algoritmo ya propuesto pero en esta ocasión tenemos en cuenta un
+entorno del punto que analizamos.
 
 Como demuestra el siguiente gráfico
 
@@ -279,7 +311,8 @@ Como demuestra el siguiente gráfico
 
 \caption{Comparación de ambos algoritmos DyV}
 \end{figure}
-la eficiencia del nuevo algoritmos es mayor además de ser más general
+
+la eficiencia del nuevo algoritmos es mejor además de ser más general
 que el anterior.
 
 Un análisis teórico del algoritmo anterior nos permite ver que la
