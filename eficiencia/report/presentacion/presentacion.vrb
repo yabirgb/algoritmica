@@ -1,0 +1,16 @@
+Para su ajuste he usado la función:
+
+  $$ax^2+bx+c$$
+
+\scriptsize
+\begin{verbatim}
+final sum of squares of residuals : 8.779e-06
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 1.30761e-09      +/- 1.868e-12    (0.1429%)
+b               = -2.41748e-07     +/- 5.005e-08    (20.7%)
+c               = 0.000572432      +/- 0.0002824    (49.33%)
+\end{verbatim}
+
+
