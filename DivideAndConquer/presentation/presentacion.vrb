@@ -1,0 +1,10 @@
+
+  \begin{figure}[H]
+  \centering
+      \subfloat{%
+        \includegraphics[clip,width=1\columnwidth]{../plots/segundoDyV.png}%
+      }
+
+\caption{Comparación de ambos algoritmos DyV}
+\end{figure}
+

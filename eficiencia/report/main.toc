@@ -1,0 +1,27 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}An\IeC {\'a}lisis de los algoritmos}{3}{section.1}
+\contentsline {subsection}{\numberline {1.1}Algoritmo burbuja}{3}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Algoritmo de ordenaci\IeC {\'o}n por insercci\IeC {\'o}n}{3}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Algoritmo de ordenaci\IeC {\'o}n por selecci\IeC {\'o}n}{3}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Algoritmo de ordenaci\IeC {\'o}n mergesort}{3}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Algoritmo de ordenaci\IeC {\'o}n quicksort}{4}{subsection.1.5}
+\contentsline {subsection}{\numberline {1.6}Algoritmo de ordenaci\IeC {\'o}n heapsort}{4}{subsection.1.6}
+\contentsline {subsection}{\numberline {1.7}Algoritmo floyd}{4}{subsection.1.7}
+\contentsline {subsection}{\numberline {1.8}Algoritmo de las torres de Hanoi}{4}{subsection.1.8}
+\contentsline {section}{\numberline {2}C\IeC {\'a}lculo de la eficiencia emp\IeC {\'\i }rica}{5}{section.2}
+\contentsline {subsection}{\numberline {2.1}Procedimiento}{5}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Condiciones de las mediciones}{5}{subsection.2.2}
+\contentsline {section}{\numberline {3}Resultados obtenidos}{6}{section.3}
+\contentsline {subsection}{\numberline {3.1}Algoritmo de ordenaci\IeC {\'o}n burbuja}{6}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Algoritmo de ordenaci\IeC {\'o}n por inserci\IeC {\'o}n}{7}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Algoritmo de ordenaci\IeC {\'o}n por selecci\IeC {\'o}n}{8}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Comparativa de los algoritmos cuadr\IeC {\'a}ticos de ordenaci\IeC {\'o}n}{9}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Algoritmo de ordenaci\IeC {\'o}n mergesort}{9}{subsection.3.5}
+\contentsline {subsection}{\numberline {3.6}Algoritmo de ordenaci\IeC {\'o}n quicksort}{10}{subsection.3.6}
+\contentsline {subsection}{\numberline {3.7}Algoritmo de ordenaci\IeC {\'o}n heapsort}{11}{subsection.3.7}
+\contentsline {subsection}{\numberline {3.8}Algoritmo floyd}{12}{subsection.3.8}
+\contentsline {subsection}{\numberline {3.9}Algoritmo de las torres de Hanoi}{13}{subsection.3.9}
+\contentsline {section}{\numberline {4}Analisis de los resultados}{14}{section.4}
+\contentsline {subsection}{\numberline {4.1}Comparativa de los algoritmos $O(n^2)$ de ordenaci\IeC {\'o}n}{14}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Comparativa de los algoritmos $nlog(n)$ de ordenaci\IeC {\'o}n}{15}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Comparativa de los algoritmos de ordenaci\IeC {\'o}n}{16}{subsection.4.3}
