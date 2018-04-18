@@ -1,0 +1,220 @@
+\documentclass[spanish]{beamer}
+
+%Language symbols
+\usepackage[spanish]{babel}
+\selectlanguage{spanish}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+
+\usepackage{graphicx}
+\usepackage{subfig}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{pifont}
+
+% Code
+
+\usepackage{listings,textcomp}
+\lstset{
+  breakatwhitespace,
+  language=c++,
+  columns=fullflexible,
+  keepspaces,
+  breaklines,
+  tabsize=2, 
+  showstringspaces=false,
+  extendedchars=true,
+  basicstyle=\fontfamily{pcr}\selectfont\scriptsize,
+  keywordstyle=\color{orange},
+  upquote=true,
+  literate={-}{-}1}
+
+%Theme
+\usetheme{metropolis}
+
+%Title
+\title{Algoritmo Greedy: Problema de los electricistas}
+\date{\today}
+\author{Yábir G. Benchakhtir}
+\institute{Doble Grado en Ingeniería Informática y Matemáticas}
+%Document
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}\frametitle{Descripción del problema}
+  Tenemos un conjunto de tareas $T$ y un electricista. Cada tarea $T[i]$
+  tiene asignado un tiempo $t_i$ que, a efectos de implementación, será
+  un entero que indicará los segundos necesarios para completarla. El
+  dinero que cobra el electricista por cada tarea completada es
+  inversamente proporcional al tiempo de espera del cliente. ¿Cuál es la
+  distribución temporal de las tareas que garantiza la máxima ganancia?
+\end{frame}
+
+\begin{frame}\frametitle{Candidato a algoritmo}
+
+  El tiempo de espera total es el siguiente:
+
+  \begin{align}
+      T(P) &= p_0 + (p_0 + p_1) + (p_0+ p_1 + p_2)  \dots \\
+       &= np_0 + (n-1)p_1 + \dots p_n \\
+       &= \sum_{k=0}^{n-1}(n-k)p_k
+  \end{align}
+
+  Y queremos minimizar este tiempo.
+  
+\end{frame}
+
+\begin{frame}\frametitle{Algoritmo propuesto}
+
+  \begin{algorithm}[H]
+    \caption{Asignación de tareas}
+    \begin{algorithmic}
+      \State tasks = $[t_1, t_2, ... , t_n]$
+      \State schedule = $[]$
+      \Procedure{distribution}{}
+      \State schedule = sort(tasks)
+      \State return schedule
+      \EndProcedure
+    \end{algorithmic}
+  \end{algorithm}
+  
+\end{frame}
+
+\begin{frame}\frametitle{Por qué este algoritmo es el mejor}
+  Suponemos $P$ un vector no ordenado ascendentemente cuya solución es
+  óptima y $P'$ el mismo vector $P$ sobre el que se ha realizado una
+  permutación consistente en hacer que para $ l < m$ $p_l < p_m$. Esto es posible ya que no está totalmente ordenado. 
+  \begin{align*}
+    T(P') &= (n-l)p_l + (n-m)p_m + \sum_{k=0, k \notin \{l,m\}}^{n-1}(n-k)p_k \\
+    T(P) &= (n-m)p_l + (n-l)p_m + \sum_{k=0, k \notin \{l,m\}}^{n-1}(n-k)p_k
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+
+  Como $T(P') > T(P)$
+  
+  \begin{align*}
+  (n-l)p_l+(n-m)p_m &> (n-m)p_l + (n-l)p_m \\
+  (n-l-n+m)p_l &> p_m(n-l+m+n) \\
+  (m-l)p_l &> p_m(m-l) \\
+  (m-l)(p_l-p_m) &> 0
+\end{align*}
+\end{frame}
+
+\begin{frame}\frametitle{¿Es nuestro algoritmo greedy?}
+
+
+  \begin{itemize}
+  \item \textbf{Un conjunto de candidatos.}
+
+    En nuestro caso los candidatos son las tareas que tenemos que completar ($P$).
+    \pause
+  \item \textbf{Una lista de candidatos ya usados.}
+
+    La lista de candidatos usados se resume a la lista de tareas que ya están asignadas.
+    \pause
+   
+  \item \textbf{Función para determinar si nuestra solución es candidata
+      a pertenecer al conjunto de soluciones válidas.}
+
+    Nuestras soluciones siempre van a ser válidas aunque hay
+    soluciones que son mejores que otras.
+  
+  \end{itemize}
+  
+  \end{frame}
+
+  \begin{frame}\frametitle{¿Se puede resolver nuestro problema con un algoritmo greedy?}
+
+
+  \begin{itemize}
+  \item \textbf{Una función de selección que indique el mejor
+      candidato.}  En nuestro algoritmo siempre vamos eligiendo la
+    tarea que se encuentra en nuestro vector de candidatos en la
+    primera posición. Nuestra función de selección es sencillamente
+
+    \[
+      \lambda(P) = P[0]
+    \]
+
+    \pause
+
+  \item \textbf{Una función objetivo.}
+
+    Nuestra función objetivo es la que asigna a cada solución el
+    tiempo de espera total de los clientes y que ya se ha mostrado:
+
+    \[
+      T(P) = \sum_{k=0}^{n-1}(n-k)p_k
+    \]
+    
+  \end{itemize}
+    
+\end{frame}
+
+\begin{frame}\frametitle{Que ocurre si tenemos varios electricistas}
+  Nuestro principal problema es como realizar el reparto de tareas a
+  cada trabajador.
+
+  \pause
+
+  Una vez repartidas siempre usamos el algoritmo descrito
+  anteriormente.
+\end{frame}
+
+\begin{frame}\frametitle{Algoritmo}
+  \begin{algorithm}[H]
+    \caption{Asignación de tareas}
+    \begin{algorithmic}
+      \State workers = $[w_1, w_2, ... w_k]$
+      \State tasks = sorted($[t_1, t_2, ... t_n]$)
+      \Procedure{distribution}{}
+      \State assignations = $\{\}$
+      \State currentWorker = 0
+
+      \For{task in tasks}
+      \State assignations[workers[currentWorker]] += task
+      \State currentWorker = $(currentWorker + 1) \% k$
+      \EndFor
+      \State return assignations
+      \EndProcedure
+    \end{algorithmic}
+  \end{algorithm}
+\end{frame}
+
+\begin{frame}\frametitle{Algoritmo}
+  En esta solución aplicamos una idea semejante a la
+  anterior. Partimos también de un vector ordenado y además estamos
+  repartiendo las tareas de manera que la media de tiempos de cada
+  trabajador tiende a ser la misma.
+\end{frame}
+
+\begin{frame}\frametitle{Ejemplo}
+
+  \[
+    P = [9,8,3,6,1,7,5]
+    w = 3 
+  \]
+  \pause
+  
+  $$sorted(P) = [1,3,5,6,7,8,9]$$
+  \pause
+  \[
+    w_1 = [1,6,9] \quad
+    w_2 = [3,7] \quad
+    w_3 = [5,8]
+  \]
+
+  \pause
+
+  \[
+    T(w_1) = 1 + 7 + 16 = 24 \quad
+    T(w_2) = 3 + 10 = 13 \quad
+    T(w_3) = 5 + 13 = 18
+  \]
+\end{frame}
+\end{document}
+

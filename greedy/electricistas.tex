@@ -1,0 +1,226 @@
+\documentclass{article}
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2cm]{geometry} % page settings
+\usepackage{amsmath} % provides many mathematical environments & tools
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[spanish]{babel}
+
+\usepackage{multirow}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{pifont}
+
+\usepackage[utf8]{inputenc}
+\setlength{\parindent}{0mm}
+
+\usepackage[parfill]{parskip}
+
+% Para el código
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\newcommand{\n}[1]{{\color{gray}#1}}
+\lstset{numbers=left,numberstyle=\small\color{gray}}
+
+% Entorno para estilo de ejercicios
+\setlength{\parindent}{0pt}
+
+\usepackage{color}   %May be necessary if you want to color links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+\usepackage{graphicx}
+\usepackage{subfig}
+
+\usepackage{listings,textcomp}
+\lstset{
+  breakatwhitespace,
+  language=c++,
+  columns=fullflexible,
+  keepspaces,
+  breaklines,
+  tabsize=2, 
+  showstringspaces=false,
+  extendedchars=true,
+  basicstyle=\fontfamily{pcr}\selectfont\scriptsize,
+  keywordstyle=\color{orange},
+  upquote=true,
+  literate={-}{-}1
+}
+
+\lstset{numbers=left,xleftmargin=3.5em,framexleftmargin=1em}
+
+\title{Aplicación del algoritmo Greedy - Electricistas \\[5mm]
+  \Large Algorítmica\\
+  \normalsize Doble Grado en Ingeniería Informática y Matemáticas\\[5cm]
+}
+\author{Yábir García Benchakhtir \\ yabirgb@correo.ugr.es \\[10cm]}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+\section{Descripción del problema}
+
+Tenemos un conjunto de tareas $P$ y un electricista. Cada tarea $P[i]$
+tiene asignado un tiempo $p_i$ que, a efectos de implementación, será
+un entero que indicará los segundos necesarios para completarla. El
+dinero que cobra el electricista por cada tarea completada es
+inversamente proporcional al tiempo de espera del cliente. ¿Cuál es la
+distribución temporal de las tareas que garantiza la máxima ganancia?
+
+\section{Solución del problema}
+
+En este problema maximizar las ganancias es equivalente al problema de
+minimizar el tiempo de espera.
+
+La suma de los tiempos de espera de cada cliente es:
+
+\begin{align}
+  T(P) &= p_0 + (p_0 + p_1) + (p_0+ p_1 + p_2)  \dots \\
+       &= np_0 + (n-1)p_1 + \dots p_n \\
+       &= \sum_{k=0}^{n-1}(n-k)p_k
+\end{align}
+  
+
+Es razonable pensar que el tiempo de espera se va a minimizar si
+ordenamos las tareas en orden no decreciente de tiempo. De esta manera
+estamos consiguiendo minimazar el tiempo de espera para las primeras
+tareas y las que requieren más tiempo no penalizan al resto.
+
+\section{Algoritmo propuesto}
+
+Para solucionar este problema se propone como algoritmo el siguiente:
+
+\begin{algorithm}[H]
+\caption{Asignación de tareas}
+\begin{algorithmic}
+\State tasks = $[t_1, t_2, ... ,t_n]$
+\State schedule = $[]$
+\Procedure{distribution}{}
+\State schedule = sort(tasks)
+\State return schedule
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+\subsection{¿Es nuestro algoritmo greedy?}
+
+Si analizamos un algoritmo greedy vemos que estos constan de tres
+partes diferenciadas:
+
+\begin{itemize}
+\item Un conjunto de candidatos.
+\item Una lista de candidatos ya usados.
+\item Un criterio (función) solución que dice cuándo un conjunto de
+  candidatos forma una solución (no necesariamente óptima).
+\item Criterio para dictar cuando una solución es válida.
+\item Una función de selección que indique el mejor candidato.
+\item Una función objetivo que asocie a cada solución un valor.
+\end{itemize}
+
+En este caso el conjunto de candidatos es el conjunto de todas las
+tareas.
+
+La lista de candidatos ya usados es la lista que mantenemos con las
+tareas en el orden que las va a realizar el electricista.
+
+En este caso, trabajando con enteros, podemos realizar en un
+tiempo $nlog(n)$ ya que comparamos en tiempo constante.
+
+Para nosotros todos los subconjuntos de soluciones son válidas.  La
+función que nos permita elegir el mejor resultado cada vez es
+sencillamente la función
+
+\[
+  \lambda(P) = P[0]
+\]
+
+Y la función objetivo simplemente es el cálculo del valor que queremos
+minimizar.
+
+\section{Demostración de la eficiencia de este algoritmo}
+
+Supongamos que $P$ es una distribución no ordenada en función de
+tiempo de las tareas y además óptima.
+
+$P'$ es una permutación de $P$ donde hemos cambiado las posiciones $l$
+y $m$ tal que $l < m$ y $p[l] < p[m]$. Esta permutación es distinta de
+la anterior ya que habíamos supuesto que no estaba ordenado en orden
+creciente de tiempos. De esta manera:
+
+\begin{align*}
+  T(P') &= (n-l)p_l + (n-m)p_m + \sum_{k=0, k \notin \{l,m\}}^{n-1}(n-k)p_k \\
+  T(P) &= (n-m)p_l + (n-l)p_m + \sum_{k=0, k \notin \{l,m\}}^{n-1}(n-k)p_k
+\end{align*}
+
+Por hipótesis $T(P) < T(P')$ por tanto:
+
+\begin{align*}
+  (n-l)p_l+(n-m)p_m &> (n-m)p_l + (n-l)p_m \\
+  (n-l-n+m)p_l &> p_m(n-l+m+n) \\
+  (m-l)p_l &> p_m(m-l) \\
+  (m-l)(p_l-p_m) &> 0
+\end{align*}
+
+Lo cual es absurdo pues por hipótesis $p_l < p_m$.
+
+\section{Caso de tener múltiples electricistas}
+
+En el caso de tener múltiples electricistas el problema reside en como
+asignar el reparto de tareas a cada electricista de modo que una vez
+hecho el reparto vamos a aplicar el algoritmo anteriormente descrito a
+las tareas de cada electricista.
+
+Supongamos que tenemos $k$ electricistas. Lo primero que tenemos que
+hacer es ordenar el vector de tareas, esto es igual a lo que haciamos
+en el caso de tener un solo electricista.
+
+Una vez tenemos el vector ordenado repartimos a los $k$ elecetricistas
+las primeras $k$ tareas de manera que tenemos el vector $P[k:]$
+(subdivisión de P a partir de la posición k) y volvemos a repartir de
+igual forma hasta quedarnos sin tareas.
+
+De este manera mantenemos una media de tiempo similar para cada
+electricista y nos estamos garantizando que las tareas se realizan en
+el menor tiempo posible una vez que han sido asignadas a un
+electricista.
+
+Una implementación con pseudo-código sería la siguiente:
+
+\begin{algorithm}[H]
+\caption{Asignación de tareas}
+\begin{algorithmic}
+\State workers = $[w_1, w_2, ... w_k]$
+\State tasks = sorted($[t_1, t_2, ... t_n]$)
+\Procedure{distribution}{}
+\State assignations = $\{\}$
+\State currentWorker = 0
+
+\For{task in tasks}
+\State assignations[workers[currentWorker]] += task
+\State currentWorker = $(currentWorker + 1) \% k$
+\EndFor
+\State return assignations
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+En el caso de que la cantidad de tareas fuese menor que el número de
+trabajadores disponibles el anterior algoritmo sigue siendo válido ya
+que si consideramos $n$ el número de tareas basta aplicar el algoritmo
+con las sección de trabajadores $W[:n]$ (lista de los trabajadores hasta
+la posición n).
+
+\end{document}
