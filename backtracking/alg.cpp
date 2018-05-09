@@ -30,17 +30,17 @@ void printVector(vector<T> v){
 int calcularAfinidad(vector<int> &solucion, vector<vector<int>> &afinidades){
   int afinidad = 0;
   for(int i = 1; i < solucion.size()-1; i++){
-    afinidad += afinidades[i][i+1];
-    afinidad += afinidades[i][i-1];
+    afinidad += afinidades[solucion[i]][solucion[i+1]];
+    afinidad += afinidades[solucion[i]][solucion[i-1]];
   }
 
-  afinidad += afinidades[0][solucion.size()];
+  afinidad += afinidades[solucion[0]][solucion[solucion.size()]];
   return afinidad;
 }
 
 bool sentado(int pos, vector<int> &solucion){
-  for(int i = 0; i < pos; i++){
-    if (solucion[i] == solucion[pos]){
+  for(int i = 0; i < solucion.size(); i++){
+    if (i != pos && solucion[i] == solucion[pos]){
       return true;
     }
   }
@@ -48,27 +48,31 @@ bool sentado(int pos, vector<int> &solucion){
   return false;
 }
 
-void posicionar(int pos, vector<int> &solucion, vector<vector<int>> &afinidades, int &mejor, vector<int> &mejorSolucion){
+void posicionar(int pos, vector<int> solucion, vector<vector<int>> &afinidades, int &mejor, vector<int> &mejorSolucion){
   for(int i = 1; i < afinidades.size(); i++){
     
     solucion[pos] = i;
-    
+    /*cout << "Value of [" << pos << "] set to " << i << endl;
+    cout << "Vector: ";
+    printVector(solucion);
+    cout << endl;*/
     if(!sentado(pos, solucion)){
-      if (i < afinidades.size()-1)
+      if(pos+1 < afinidades.size()){
 	posicionar(pos+1, solucion, afinidades, mejor, mejorSolucion);
+      }
       else{
-	int peso = calcularAfinidad(solucion, afinidades);
-
-	cout << "afinidad de la solución ";
-	printVector(solucion);
-	cout << " " << peso << endl;
-	
-	if(peso > mejor){
-	  mejor = peso;
+	if(calcularAfinidad(solucion, afinidades) > mejor){
+	  mejor = calcularAfinidad(solucion, afinidades);
 	  mejorSolucion = solucion;
 	}
+
+	
+	cout << "afinidad de la solución ";
+	printVector(solucion);
+	cout << " " << calcularAfinidad(solucion, afinidades) << " vs " << mejor << endl;
       }
     }
+
     
   }
 }
@@ -87,12 +91,15 @@ int main(){
 
   for(int i = 0; i < pSize; i++){
     for(int j = 0; j < pSize; j++){
-      if(i == j)
+      if(i == j){
 	afinidades[i][j] = 100;
-      else
+	afinidades[j][i] = afinidades[i][j];
+      }
+      else{
 	afinidades[i][j] = afinidad(rng);
+	afinidades[j][i] = afinidad(rng);
+      }
       
-      afinidades[j][i] = afinidades[i][j];
     }
   }
 
@@ -102,5 +109,13 @@ int main(){
   posicionar(1, solucion, afinidades, mejorAfinidad, solucion);
   cout << "Mejor solución: ";
   printVector(solucion);
-  cout << endl;
+  cout << " con una afinidad de " << mejorAfinidad << endl;
+
+  /*
+  vector<int> s;
+  s.push_back(0);
+  s.push_back(1);
+  s.push_back(2);
+  cout << calcularAfinidad(s, afinidades) << endl;
+  cout << calcularAfinidad(s, afinidades) << endl;*/
 }
